@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import socket
+import sys
 import os
 
 
@@ -31,7 +32,7 @@ def airmon(interface, console=False, loop=60):
     i += 1
 
     ch = ((ch + 1) % 13) + 1
-    os.system("sudo iwconfig mon0 channel %d" % ch)
+    os.system("sudo iwconfig %s channel %d" % (interface, ch))
 
     try:
       packet = soc.recvfrom(4096)[0]
@@ -69,4 +70,4 @@ def airmon(interface, console=False, loop=60):
   return ap
 
 if __name__ == "__main__":
-  airmon("mon0", console=True, loop=None)
+  airmon(sys.argv[1], console=True, loop=None)
